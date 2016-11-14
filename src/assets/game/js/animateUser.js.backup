@@ -1,0 +1,105 @@
+if (this.animationInterval) {
+                var notClear = false;
+            
+                if (/*window.key.down     &&*/ this.user.direction == 0) this.user.yCoord += this.walkSpeed;
+                if (/*window.key.right    &&*/ this.user.direction == 1) this.user.xCoord += this.walkSpeed;
+                if (/*window.key.up       &&*/ this.user.direction == 2) this.user.yCoord -= this.walkSpeed;
+                if (/*window.key.left     &&*/ this.user.direction == 3) this.user.xCoord -= this.walkSpeed;
+
+                if (this.user.xCoord % 1 != 0) notClear = true;
+                if (this.user.yCoord % 1 != 0) notClear = true;
+
+                if (!notClear) this.animationInterval = false;
+        }
+        
+        
+        this.animationDelay++;
+        if (window.key.down)    this.user.direction = 0;
+        if (window.key.right)   this.user.direction = 1;
+        if (window.key.up)      this.user.direction = 2;
+        if (window.key.left)    this.user.direction = 3;
+        
+        if (window.key.any && this.keyHold != this.maxKeyHold) {
+            this.keyHold++;
+        } else if (!window.key.any){
+            this.keyHold = 0;
+            this.user.walking = false;
+            this.user.walkstate = 0;
+            if (!isNaN(this.user.xCoord) && this.user.xCoord.toString().indexOf('.') != -1) this.user.xCoord = Math.round(this.user.xCoord);
+            if (!isNaN(this.user.yCoord) && this.user.yCoord.toString().indexOf('.') != -1) this.user.yCoord = Math.round(this.user.yCoord);
+        }
+        if (this.animationDelay == this.maxAnimationDelay + 1) this.animationDelay = 0; 
+        if (this.keyHold == this.maxKeyHold && this.animationDelay == this.maxAnimationDelay && window.key.any) {
+            
+            this.animationDelay = 0;
+            this.user.walking = true;
+//            
+            this.animationInterval = true;
+
+            this.user.walkstate++;
+            if (this.user.walkstate == 3) this.user.walkstate = 0;
+        }
+
+
+///
+
+ this.animationDelay++;
+        if (this.animationDelay == this.maxAnimationDelay + 1) this.animationDelay = 0;
+
+this.user = USERS_DATA[username];
+    this.keyHold = 0;
+    this.maxKeyHold = 5;
+    this.animationDelay = 0;
+    this.maxAnimationDelay = 4;
+    this.animationCounterIndex;
+    this.walkSpeed = 0.125;
+    this.animationIntervalX;
+    this.animationIntervalY;
+
+
+
+
+
+//// 
+var anyKeyX = false;
+        var anyKeyY = false;
+        
+        if (window.key.down)    this.user.direction = 0;
+        if (window.key.right)   this.user.direction = 1;
+        if (window.key.up)      this.user.direction = 2;
+        if (window.key.left)    this.user.direction = 3;
+        
+        if (window.key.left || window.key.right)    anyKeyX = true;
+        if (window.key.up   || window.key.down)     anyKeyY = true;
+        
+        this.keyHoldX++;
+        this.keyHoldY++;
+        if (this.keyHoldX == this.maxKeyHold + 1 || !anyKeyX) this.keyHoldX = 0;
+        if (this.keyHoldY == this.maxKeyHold + 1 || !anyKeyY) this.keyHoldY = 0;
+        
+        
+        if (this.keyHoldX == this.maxKeyHold) this.animationIntervalX = true;
+        if (this.keyHoldY == this.maxKeyHold) this.animationIntervalY = true;
+        
+        if (this.animationIntervalX) {
+            var clear = true;
+            
+            if (this.user.direction == 1) this.user.xCoord += this.walkSpeed;
+            if (this.user.direction == 3) this.user.xCoord -= this.walkSpeed;
+            
+            if (this.user.xCoord % 1 != 0) clear = false;
+
+            if (clear) this.animationIntervalX = false;
+        }
+        
+        if (this.animationIntervalY) {
+            var clear = true;
+            
+            if (this.user.direction == 0) this.user.yCoord += this.walkSpeed;
+            if (this.user.direction == 2) this.user.yCoord -= this.walkSpeed;
+            
+            if (this.user.yCoord % 1 != 0) clear = false;
+
+            if (clear) this.animationIntervalY = false;
+        }
+        
